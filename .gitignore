@@ -1,0 +1,5 @@
+node_modules/
+config/global.json
+config/projects.json
+config/profiles.json
+.env

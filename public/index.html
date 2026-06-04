@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Code Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>GitHub Code Manager</h1>
+      <p class="subtitle">Manage your GitHub projects: upload, download, build, and deploy</p>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="add">Add Project</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <!-- Dashboard Tab -->
+    <div id="tab-dashboard" class="tab-content active">
+      <div class="toolbar">
+        <button type="button" id="btnRefresh" class="btn btn-secondary btn-sm">Refresh</button>
+        <span id="globalStatus" class="status-text"></span>
+      </div>
+      <div id="dashboardList" class="dashboard-list"></div>
+    </div>
+
+    <!-- Add Project Tab -->
+    <div id="tab-add" class="tab-content">
+      <section class="card">
+        <h2 id="projectFormTitle">Add / Edit Project</h2>
+        <form id="projectForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Repository Name (also used as project name)</label>
+              <input type="text" id="projectName" placeholder="e.g. my-app" required>
+            </div>
+            <div class="form-group">
+              <label>GitHub Owner</label>
+              <input type="text" id="repoOwner" placeholder="username" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Local Code Path</label>
+            <input type="text" id="codePath" placeholder="C:\path\to\code" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Branch</label>
+              <input type="text" id="branch" value="main">
+            </div>
+            <div class="form-group checkbox-group">
+              <label><input type="checkbox" id="isPrivate"> Private Repository</label>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" id="btnSaveProject" class="btn btn-primary">Save Project</button>
+            <button type="button" id="btnCancelEdit" class="btn btn-secondary">Cancel</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="tab-settings" class="tab-content">
+      <section class="card">
+        <h2>Global GitHub Settings</h2>
+        <p class="hint">These settings apply to all projects</p>
+        <form id="globalForm">
+          <div class="form-group">
+            <label>GitHub Token <span id="tokenStatusIcon" class="token-status"></span></label>
+            <div class="input-row">
+              <input type="password" id="globalToken" placeholder="Enter new token to update...">
+              <button type="button" id="btnVerifyGlobal" class="btn btn-secondary btn-sm">Verify</button>
+            </div>
+            <span id="globalTokenStatus" class="status-text"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Git Author Name</label>
+              <input type="text" id="globalGitName" placeholder="Your Name">
+            </div>
+            <div class="form-group">
+              <label>Git Author Email</label>
+              <input type="text" id="globalGitEmail" placeholder="you@example.com">
+            </div>
+          </div>
+          <button type="button" id="btnSaveGlobal" class="btn btn-primary">Save Settings</button>
+        </form>
+      </section>
+    </div>
+
+    <!-- Output Panel -->
+    <section class="card output-section">
+      <div class="output-header">
+        <h2>Output</h2>
+        <div class="btn-group compact">
+          <button type="button" id="btnStopProc" class="btn btn-danger btn-sm">Stop</button>
+        </div>
+      </div>
+      <div id="runOutput" class="log-box tall"></div>
+    </section>
+
+    <!-- Operation Log -->
+    <section class="card log-section">
+      <h2>Operation Log</h2>
+      <div id="logOutput" class="log-box"></div>
+    </section>
+
+    <!-- Conflict Modal -->
+    <div id="conflictModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Merge Conflict Detected</h3>
+        <p id="conflictMessage"></p>
+        <div id="conflictFiles" class="conflict-files"></div>
+        <div class="btn-group">
+          <button id="btnAbortMerge" class="btn btn-danger">Abort</button>
+          <button id="btnResolveContinue" class="btn btn-primary">Resolve & Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
